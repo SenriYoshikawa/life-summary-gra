@@ -25,9 +25,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    sensordatatype.cpp
+    sensordatatype.cpp \
+    dailysensortype.cpp \
+    montylysensortype.cpp \
+    yearlysensortype.cpp \
+    datamanager.cpp
 
 HEADERS  += mainwindow.hpp \
-    sensordatatype.hpp
+    sensordatatype.hpp \
+    dailysensortype.hpp \
+    montylysensortype.hpp \
+    yearlysensortype.hpp \
+    datamanager.hpp
 
 FORMS    += mainwindow.ui

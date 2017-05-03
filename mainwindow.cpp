@@ -2,20 +2,22 @@
 
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
-#include "sensordatatype.hpp"
+#include "datamanager.hpp"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    std::vector<YearlySensorType> data;
 
-    SensorDataType* data;
 
     connect(ui->actionOpen, QAction::triggered,[=,&data](){
-        QString filename = QFileDialog::getOpenFileName(this,"データフィアルを選択","","Text File (*.txt *.csv)");
-        data = new SensorDataType(filename);
+        QString fileName = QFileDialog::getOpenFileName(this,"データフィアルを選択","","Text File (*.txt *.csv)");
+        DataManager dataManager(fileName);
+        data = dataManager.getSensorData();
     });
+
 }
 
 MainWindow::~MainWindow()
