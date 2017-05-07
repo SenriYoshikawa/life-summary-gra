@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>915</width>
-    <height>463</height>
+    <width>1629</width>
+    <height>669</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QComboBox" name="beginComboBox">
     <property name="geometry">
      <rect>
-      <x>670</x>
-      <y>30</y>
+      <x>20</x>
+      <y>10</y>
       <width>121</width>
       <height>22</height>
      </rect>
@@ -27,11 +27,37 @@
    <widget class="QComboBox" name="endComboBox">
     <property name="geometry">
      <rect>
-      <x>670</x>
-      <y>70</y>
+      <x>160</x>
+      <y>10</y>
       <width>121</width>
       <height>22</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QWidget" name="chartWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>1581</width>
+      <height>571</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="drawButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>10</y>
+      <width>131</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
     </property>
    </widget>
   </widget>
@@ -40,7 +66,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>915</width>
+     <width>1629</width>
      <height>21</height>
     </rect>
    </property>

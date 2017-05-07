@@ -13,7 +13,6 @@ public:
     QList<QString> getDataList() const;
     QList<QString> getDataListAfter(int const index) const;
 
-private:
     std::vector<YearlySensorType> data;
     QList<QString> dataList;
     void generateDataList();

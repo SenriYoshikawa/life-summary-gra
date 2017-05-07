@@ -4,7 +4,11 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui \
+            charts
+
+target.path = $$[QT_INSTALL_EXAMPLES]/charts/barchart
+INSTALLS += target
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -29,13 +33,15 @@ SOURCES += main.cpp\
     dailysensortype.cpp \
     montylysensortype.cpp \
     yearlysensortype.cpp \
-    datamanager.cpp
+    datamanager.cpp \
+    chart.cpp
 
 HEADERS  += mainwindow.hpp \
     sensordatatype.hpp \
     dailysensortype.hpp \
     montylysensortype.hpp \
     yearlysensortype.hpp \
-    datamanager.hpp
+    datamanager.hpp \
+    chart.hpp
 
 FORMS    += mainwindow.ui
