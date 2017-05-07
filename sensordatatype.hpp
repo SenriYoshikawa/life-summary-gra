@@ -1,18 +1,18 @@
 #ifndef SENSORDATATYPE_HPP
 #define SENSORDATATYPE_HPP
 
-#include <chrono>
+#include <cstddef>
 
 class SensorDataType
 {
 public:
     SensorDataType();
-    SensorDataType(std::chrono::hours _hour, std::chrono::minutes _minute, int _sensor1, int _sensor2);
+    SensorDataType(std::size_t _hour, std::size_t _min, int _sensor1, int _sensor2);
 
 
 private:
-    std::chrono::hours hour;
-    std::chrono::minutes minute;
+    std::size_t hour;
+    std::size_t min;
     int sensor1;
     int sensor2;
 };

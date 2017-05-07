@@ -5,12 +5,7 @@ SensorDataType::SensorDataType()
 
 }
 
-SensorDataType::SensorDataType(std::chrono::hours _hour, std::chrono::minutes _minute, int _sensor1, int _sensor2):hour(_hour),minute(_minute),sensor1(_sensor1),sensor2(_sensor2)
-{
-
-}
-
-SensorDataType::SensorDataType(QString filename)
+SensorDataType::SensorDataType(std::size_t _hour, std::size_t _min, int _sensor1, int _sensor2):hour(_hour),min(_min),sensor1(_sensor1),sensor2(_sensor2)
 {
 
 }

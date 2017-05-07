@@ -11,7 +11,6 @@ public:
     MontylySensorType();
     MontylySensorType(int const _month, std::vector<DailySensorType> const _monthlyData);
 
-private:
     int const month;
     std::vector<DailySensorType> const monthlyData;
 };

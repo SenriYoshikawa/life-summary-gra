@@ -1,7 +1,7 @@
 #ifndef DATAMANAGER_HPP
 #define DATAMANAGER_HPP
 
-#include <QString>
+#include <QStringList>
 
 #include "yearlysensortype.hpp"
 
@@ -10,7 +10,13 @@ class DataManager
 public:
     DataManager();
     DataManager(QString fileName);
-    std::vector<YearlySensorType> getSensorData();
+    QList<QString> getDataList() const;
+    QList<QString> getDataListAfter(int const index) const;
+
+private:
+    std::vector<YearlySensorType> data;
+    QList<QString> dataList;
+    void generateDataList();
 };
 
 #endif // DATAMANAGER_HPP

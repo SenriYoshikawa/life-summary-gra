@@ -9,9 +9,8 @@ class YearlySensorType
 {
 public:
     YearlySensorType();
-    YearlySensorType(int const _year, std::vector<MontylySensorType> const _yearlyData);
+    YearlySensorType(std::size_t const _year, std::vector<MontylySensorType> const _yearlyData);
 
-private:
     int const year;
     std::vector<MontylySensorType> const yearlyData;
 };
