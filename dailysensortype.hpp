@@ -11,8 +11,10 @@ public:
     DailySensorType();
     DailySensorType(int const _day, std::vector<SensorDataType> const _dailyData);
 
-    double s1_sum;
-    double s2_sum;
+    double s1_sum = 0;
+    double s2_sum = 0;
+    double s1_ave = 0;
+    double s2_ave = 0;
     int const day;
     std::vector<SensorDataType> const dailyData;
 };

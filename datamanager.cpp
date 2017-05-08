@@ -46,7 +46,7 @@ DataManager::DataManager(QString fileName)
             m = list.at(1).split(':').at(1).toInt();
 
             s1 = (list.at(2) == 'x') ? 0 : list.at(2).toInt(0, 16);
-            s2 = (list.at(3) == 'x') ? 0 : list.at(2).toInt(0, 16);
+            s2 = (list.at(3) == 'x') ? 0 : list.at(3).toInt(0, 16);
             dailyTemp.emplace_back(SensorDataType(h, m, s1, s2));
             //qDebug() << h << m;
             if(h == 23 && m == 59) break;
