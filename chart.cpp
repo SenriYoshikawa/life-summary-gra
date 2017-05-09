@@ -6,7 +6,7 @@ Chart::Chart()
 
 }
 
-QtCharts::QChartView* Chart::getChart(std::vector<YearlySensorType> &yearlyData, int begin, int end)
+QtCharts::QChartView* Chart::getChart(DataManager &dataManager, int begin, int end)
 {
     QT_CHARTS_USE_NAMESPACE
 
@@ -15,7 +15,7 @@ QtCharts::QChartView* Chart::getChart(std::vector<YearlySensorType> &yearlyData,
     QBarSet *s2Set = new QBarSet("Sensor2");
 
     int i = 0;
-    for(auto const& each_year : yearlyData)for(auto const& each_month : each_year.yearlyData)
+    for(auto const& each_year : dataManager.data)for(auto const& each_month : each_year.yearlyData)
     {
         if(begin <= i && i <= end)
         {
@@ -44,8 +44,10 @@ QtCharts::QChartView* Chart::getChart(std::vector<YearlySensorType> &yearlyData,
 
     //![4]
     QStringList categories;
-    // TODO: やる
-    //categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
+    for(std::size_t i = begin; i <= end; ++i)
+    {
+        categories << dataManager.getDataList().at(i);
+    }
     QBarCategoryAxis *axis = new QBarCategoryAxis();
     axis->append(categories);
     chart->createDefaultAxes();
@@ -64,49 +66,4 @@ QtCharts::QChartView* Chart::getChart(std::vector<YearlySensorType> &yearlyData,
 
     return chartView;
 
-    /*
-    QtCharts::QBarSet barSet("test");
-
-    int i = 0;
-    for(auto const& each_year : yearlyData)for(auto const& each_month : each_year.yearlyData)
-    {
-        if(begin <= i && i <= end) barSet << each_month.s1_sum;
-        i++;
-    }
-
-    qDebug() << "ok2-1";
-
-    QtCharts::QBarSeries *series = new QtCharts::QBarSeries();
-    series->append(&barSet);
-
-    qDebug() << "ok2-2";
-
-    QtCharts::QChart *chart = new QtCharts::QChart();
-    chart->addSeries(series);
-    chart->setTitle("Simple barchart example");
-    chart->setAnimationOptions(QtCharts::QChart::SeriesAnimations);
-
-    qDebug() << "ok2-3";
-
-    QStringList categories;
-    categories << "testAxis";
-    QtCharts::QBarCategoryAxis *axis = new QtCharts::QBarCategoryAxis();
-    axis->append(categories);
-    chart->createDefaultAxes();
-    chart->setAxisX(axis, series);
-
-    qDebug() << "ok2-4";
-
-    chart->legend()->setVisible(true);
-    chart->legend()->setAlignment(Qt::AlignBottom);
-
-    qDebug() << "ok2-5";
-
-    QtCharts::QChartView *chartView = new QtCharts::QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
-
-    qDebug() << "ok2-6";
-
-    return chartView;
-    */
 }

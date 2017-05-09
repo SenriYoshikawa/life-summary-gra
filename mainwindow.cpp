@@ -34,11 +34,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->drawButton, &QPushButton::clicked,[=,&dataManager](){
         QLayout *chartlay = new QHBoxLayout;
-        qDebug() << "ok1";
-        chartlay->addWidget(Chart::getChart(dataManager->data, ui->beginComboBox->currentIndex(), ui->endComboBox->currentIndex()));
-        qDebug() << "ok2";
+        chartlay->addWidget(Chart::getChart(*dataManager, ui->beginComboBox->currentIndex(), ui->endComboBox->currentIndex()));
         ui->chartWidget->setLayout(chartlay);
-        qDebug() << "ok3";
     });
 
 }

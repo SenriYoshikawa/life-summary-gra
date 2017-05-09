@@ -16,7 +16,7 @@ class Chart
 {
 public:
     Chart();
-    static QtCharts::QChartView *getChart(std::vector<YearlySensorType>& yearlyData, int begin, int end);
+    static QtCharts::QChartView *getChart(DataManager& dataManager, int begin, int end);
 
 };
 
