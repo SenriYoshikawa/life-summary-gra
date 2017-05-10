@@ -8,6 +8,7 @@
 #include "ui_mainwindow.h"
 #include "datamanager.hpp"
 #include "chart.hpp"
+#include "amonthchart.hpp"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -17,6 +18,12 @@ MainWindow::MainWindow(QWidget *parent) :
     //std::vector<YearlySensorType> data;
     DataManager* dataManager;
 
+    QLayout *chartlay = new QHBoxLayout;
+    AMonthChart* aMonthChart = new AMonthChart();
+    QChartView *aMonthChartView = new QChartView(aMonthChart);
+    chartlay->addWidget(aMonthChartView);
+    ui->aMonthChart->setLayout(chartlay);
+
 
     connect(ui->actionOpen, QAction::triggered,[=,&dataManager](){
         QString fileName = QFileDialog::getOpenFileName(this,"データフィアルを選択","","Text File (*.txt *.csv)");
@@ -24,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
         qDebug() << "read complete";
 
         ui->beginComboBox->addItems(dataManager->getDataList());
+        ui->monthSelectComboBox->addItems(dataManager->getDataList());
     });
 
     connect(ui->beginComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),[=,&dataManager](int index){
@@ -36,6 +44,18 @@ MainWindow::MainWindow(QWidget *parent) :
         QLayout *chartlay = new QHBoxLayout;
         chartlay->addWidget(Chart::getChart(*dataManager, ui->beginComboBox->currentIndex(), ui->endComboBox->currentIndex()));
         ui->chartWidget->setLayout(chartlay);
+    });
+
+    connect(ui->monthSelectComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),[=,&dataManager](){
+        int i = 0;
+        for(auto const& each_year : dataManager->data) for(auto const& each_month : each_year.yearlyData)
+        {
+            if(i++ == ui->monthSelectComboBox->currentIndex())
+            {
+                aMonthChart->setMonth(each_month);
+                break;
+            }
+        }
     });
 
 }
