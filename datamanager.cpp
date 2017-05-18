@@ -55,10 +55,10 @@ DataManager::DataManager(QString fileName)
         date = list.at(0).split('-');
         day = date.at(2).toInt();
 
-        if(dailyTemp.size() != 1 && day == 1)
+        if(monthlyTemp.size() != 0 && day == 1)
         {
             // 初回以外の毎月１日だったら，monthlyTempをyearlyTempに入れてから空にする．
-            month = date.at(1).toInt();
+            month = (date.at(1).toInt() + 10) % 12 + 1;
             yearlyTemp.emplace_back(MontylySensorType(month, monthlyTemp));
             monthlyTemp.clear();
             monthlyTemp.emplace_back(DailySensorType(day, dailyTemp));
@@ -76,12 +76,18 @@ DataManager::DataManager(QString fileName)
             yearlyTemp.clear();
         }
     }
+    if(monthlyTemp.size() != 0)
+    {
+        month = date.at(1).toInt();
+        yearlyTemp.emplace_back(MontylySensorType(month, monthlyTemp));
+        monthlyTemp.clear();
+        monthlyTemp.emplace_back(DailySensorType(day, dailyTemp));
+        dailyTemp.clear();
+    }
 
     monthlyTemp.emplace_back(DailySensorType(day, dailyTemp));
     year = date.at(0).toInt();
     data.push_back(YearlySensorType(year, yearlyTemp));
-
-
 
     generateDataList();
 

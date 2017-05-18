@@ -1,69 +1,91 @@
 #include "chart.hpp"
+
 #include <QDebug>
+#include <QString>
+#include <QChart>
+#include <QtCharts/QChartView>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QLegend>
+#include <QtCharts/QBarCategoryAxis>
+#include <QLayout>
+
+QT_CHARTS_USE_NAMESPACE
 
 Chart::Chart()
 {
+    this->setTitle("Graph!");
+    this->setAnimationOptions(QChart::SeriesAnimations);
+
+    this->legend()->setVisible(true);
+    this->legend()->setAlignment(Qt::AlignBottom);
 
 }
 
-QtCharts::QChartView* Chart::getChart(DataManager &dataManager, int begin, int end)
+void Chart::setMonth(MontylySensorType data)
 {
-    QT_CHARTS_USE_NAMESPACE
 
-    //![1]
     QBarSet *s1Set = new QBarSet("Sensor1");
     QBarSet *s2Set = new QBarSet("Sensor2");
 
-    int i = 0;
-    for(auto const& each_year : dataManager.data)for(auto const& each_month : each_year.yearlyData)
+
+    for(auto const& each : data.monthlyData)
     {
-        if(begin <= i && i <= end)
-        {
-            *s1Set << each_month.s1_sum;
-            *s2Set << each_month.s2_sum;
-        }
-        i++;
+        *s1Set << each.s1_sum;
+        *s2Set << each.s2_sum;
     }
 
+    QBarSeries *barSeries = new QBarSeries();
+    barSeries->append(s1Set);
+    barSeries->append(s2Set);
 
-    //![1]
 
-    //![2]
-    QBarSeries *series = new QBarSeries();
-    series->append(s1Set);
-    series->append(s2Set);
+    this->removeAllSeries();
+    this->addSeries(barSeries);
 
-    //![2]
-
-    //![3]
-    QChart *chart = new QChart();
-    chart->addSeries(series);
-    chart->setTitle("Simple barchart example");
-    chart->setAnimationOptions(QChart::SeriesAnimations);
-    //![3]
-
-    //![4]
     QStringList categories;
-    for(std::size_t i = begin; i <= end; ++i)
+    for(auto const& each : data.monthlyData)
     {
-        categories << dataManager.getDataList().at(i);
+        categories << QString::number(each.day) + "日";
     }
     QBarCategoryAxis *axis = new QBarCategoryAxis();
     axis->append(categories);
-    chart->createDefaultAxes();
-    chart->setAxisX(axis, series);
-    //![4]
+    this->createDefaultAxes();
+    this->setAxisX(axis, barSeries);
 
-    //![5]
-    chart->legend()->setVisible(true);
-    chart->legend()->setAlignment(Qt::AlignBottom);
-    //![5]
-
-    //![6]
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
-    //![6]
-
-    return chartView;
 
 }
+
+void Chart::setTermMonth(DataManager const& dataManager, const int begin, const int length)
+{
+    QBarSet *s1Set = new QBarSet("Sensor1");
+    QBarSet *s2Set = new QBarSet("Sensor2");
+    QStringList categories;
+
+
+    qDebug() << begin << length;
+    int i = 0;
+    for(auto const& each_year : dataManager.data) for(auto const& each_month : each_year.yearlyData)
+    {
+        if(begin <= i++ && i <= begin + length)
+        {
+            *s1Set << each_month.s1_sum;
+            *s2Set << each_month.s2_sum;
+            categories << QString::number(each_year.year) + "年" + QString::number(each_month.month) + "日";
+        }
+    }
+
+    QBarSeries *barSeries = new QBarSeries();
+    barSeries->append(s1Set);
+    barSeries->append(s2Set);
+
+
+    this->removeAllSeries();
+    this->addSeries(barSeries);
+
+    QBarCategoryAxis *axis = new QBarCategoryAxis();
+    axis->append(categories);
+    this->createDefaultAxes();
+    this->setAxisX(axis, barSeries);
+}
+
