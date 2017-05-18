@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
     });
 
     connect(ui->drawButton, &QPushButton::clicked,[=,&dataManager](){
-        termMonthChart->setTermMonth(*dataManager, ui->beginComboBox->currentIndex(), ui->beginComboBox->currentIndex());
+        termMonthChart->setTermMonth(*dataManager, ui->beginComboBox->currentIndex(), ui->endComboBox->currentIndex() + 1);
         /*
         QLayout *chartlay = new QHBoxLayout;
         chartlay->addWidget(Chart::getChart(*dataManager, ui->beginComboBox->currentIndex(), ui->endComboBox->currentIndex()));

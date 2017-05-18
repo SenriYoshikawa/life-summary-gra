@@ -100,7 +100,7 @@ QList<QString> DataManager::getDataList() const
 
 QList<QString> DataManager::getDataListAfter(int const index) const
 {
-    return dataList.mid(index, dataList.size() - index - 1);
+    return dataList.mid(index, dataList.size() - index);
 }
 
 void DataManager::generateDataList()
