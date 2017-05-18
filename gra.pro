@@ -34,7 +34,6 @@ SOURCES += main.cpp\
     montylysensortype.cpp \
     yearlysensortype.cpp \
     datamanager.cpp \
-    chart_old.cpp \
     chart.cpp
 
 HEADERS  += mainwindow.hpp \
@@ -43,7 +42,6 @@ HEADERS  += mainwindow.hpp \
     montylysensortype.hpp \
     yearlysensortype.hpp \
     datamanager.hpp \
-    chart_old.hpp \
     chart.hpp
 
 FORMS    += mainwindow.ui
