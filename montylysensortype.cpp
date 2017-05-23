@@ -13,3 +13,15 @@ MontylySensorType::MontylySensorType(const int _month, const std::vector<DailySe
         s2_sum += each_day.s2_sum;
     }
 }
+
+QString MontylySensorType::getCommentStrings() const
+{
+    QString str;
+    for(auto const& each : comment)
+    {
+        str += each;
+        str += "\n";
+    }
+    return str;
+
+}

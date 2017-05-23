@@ -128,7 +128,7 @@ void DataManager::setCommentText(QString fileName)
         std::size_t year = date.at(0).toInt();
         std::size_t month = date.at(1).toInt();
 
-        inYear(year).inMonth(month).comment.push_back(str.toStdString());
+        inYear(year).inMonth(month).comment.push_back(str);
     }
 }
 

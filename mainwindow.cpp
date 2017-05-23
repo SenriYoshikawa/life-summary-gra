@@ -53,11 +53,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->drawButton, &QPushButton::clicked,[=,&dataManager](){
         termMonthChart->setTermMonth(*dataManager, ui->beginComboBox->currentIndex(), ui->endComboBox->currentIndex() + 1);
-        /*
-        QLayout *chartlay = new QHBoxLayout;
-        chartlay->addWidget(Chart::getChart(*dataManager, ui->beginComboBox->currentIndex(), ui->endComboBox->currentIndex()));
-        ui->chartWidget->setLayout(chartlay);
-        */
     });
 
     connect(ui->monthSelectComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),[=,&dataManager](){
@@ -67,6 +62,8 @@ MainWindow::MainWindow(QWidget *parent) :
             if(i++ == ui->monthSelectComboBox->currentIndex())
             {
                 aMonthChart->setMonth(each_month);
+                ui->commentTextEdit->clear();
+                ui->commentTextEdit->appendPlainText(each_month.getCommentStrings());
                 break;
             }
         }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1695</width>
-    <height>669</height>
+    <height>790</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
@@ -102,6 +102,16 @@
       </property>
      </widget>
     </widget>
+   </widget>
+   <widget class="QPlainTextEdit" name="commentTextEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>620</y>
+      <width>1651</width>
+      <height>111</height>
+     </rect>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
