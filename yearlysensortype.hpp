@@ -10,9 +10,10 @@ class YearlySensorType
 public:
     YearlySensorType();
     YearlySensorType(std::size_t const _year, std::vector<MontylySensorType> const _yearlyData);
+    MontylySensorType &inMonth(int m);
 
     int const year;
-    std::vector<MontylySensorType> const yearlyData;
+    std::vector<MontylySensorType> yearlyData;
 };
 
 #endif // YEARLYSENSORTYPE_H

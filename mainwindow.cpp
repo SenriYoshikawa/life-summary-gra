@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionCommentFileOpen, QAction::triggered,[=,&dataManager](){
         QString fileName = QFileDialog::getOpenFileName(this,"コメントフィアルを選択","","Text File (*.txt *.csv)");
-        //dataManager = new DataManager(fileName);
+        dataManager->setCommentText(fileName);
         qDebug() << "read complete";
     });
 

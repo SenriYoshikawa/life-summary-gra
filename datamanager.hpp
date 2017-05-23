@@ -16,6 +16,8 @@ public:
     std::vector<YearlySensorType> data;
     QList<QString> dataList;
     void generateDataList();
+    void setCommentText(QString fileName);
+    YearlySensorType& inYear(int y);
 };
 
 #endif // DATAMANAGER_HPP

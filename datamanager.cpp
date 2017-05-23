@@ -112,3 +112,33 @@ void DataManager::generateDataList()
     }
 }
 
+void DataManager::setCommentText(QString fileName)
+{
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "can not open" << fileName;
+    }
+
+    while(file.atEnd() == false)
+    {
+        QString str = file.readLine();
+        QStringList list = str.split(",");
+        QStringList date = list.at(0).split('/');
+        std::size_t year = date.at(0).toInt();
+        std::size_t month = date.at(1).toInt();
+
+        inYear(year).inMonth(month).comment.push_back(str.toStdString());
+    }
+}
+
+YearlySensorType &DataManager::inYear(int y)
+{
+    for(std::size_t i = 0; i < data.size(); ++i)
+    {
+        if(data[i].year == y) return data[i];
+    }
+    qDebug() << y << "did not found in data";
+    return data[0];
+}
+
