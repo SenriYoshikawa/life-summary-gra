@@ -117,7 +117,8 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionOpen"/>
+    <addaction name="actionSensorFileOpen"/>
+    <addaction name="actionCommentFileOpen"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -130,9 +131,17 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionOpen">
+  <action name="actionSensorFileOpen">
    <property name="text">
-    <string>Open</string>
+    <string>Sensor file open</string>
+   </property>
+  </action>
+  <action name="actionCommentFileOpen">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Comment file open</string>
    </property>
   </action>
  </widget>

@@ -7,7 +7,6 @@
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 #include "datamanager.hpp"
-#include "chart_old.hpp"
 #include "chart.hpp"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -30,13 +29,20 @@ MainWindow::MainWindow(QWidget *parent) :
     termChartlay->addWidget(termMonthChartView);
     ui->chartWidget->setLayout(termChartlay);
 
-    connect(ui->actionOpen, QAction::triggered,[=,&dataManager](){
-        QString fileName = QFileDialog::getOpenFileName(this,"データフィアルを選択","","Text File (*.txt *.csv)");
+    connect(ui->actionSensorFileOpen, QAction::triggered,[=,&dataManager](){
+        QString fileName = QFileDialog::getOpenFileName(this,"センサデータフィアルを選択","","Text File (*.txt *.csv)");
         dataManager = new DataManager(fileName);
         qDebug() << "read complete";
 
         ui->beginComboBox->addItems(dataManager->getDataList());
         ui->monthSelectComboBox->addItems(dataManager->getDataList());
+        ui->actionCommentFileOpen->setEnabled(true);
+    });
+
+    connect(ui->actionCommentFileOpen, QAction::triggered,[=,&dataManager](){
+        QString fileName = QFileDialog::getOpenFileName(this,"コメントフィアルを選択","","Text File (*.txt *.csv)");
+        //dataManager = new DataManager(fileName);
+        qDebug() << "read complete";
     });
 
     connect(ui->beginComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),[=,&dataManager](int index){
