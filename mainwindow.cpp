@@ -56,17 +56,13 @@ MainWindow::MainWindow(QWidget *parent) :
     });
 
     connect(ui->monthSelectComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),[=,&dataManager](){
-        int i = 0;
-        for(auto const& each_year : dataManager->data) for(auto const& each_month : each_year.yearlyData)
-        {
-            if(i++ == ui->monthSelectComboBox->currentIndex())
-            {
-                aMonthChart->setMonth(each_month);
-                ui->commentTextEdit->clear();
-                ui->commentTextEdit->appendPlainText(each_month.getCommentStrings());
-                break;
-            }
-        }
+        std::size_t year = ui->monthSelectComboBox->currentText().split("/").at(1).toInt();
+        std::size_t month = ui->monthSelectComboBox->currentText().split("/").at(0).toInt();
+        auto& targetMonth = dataManager->inYear(year).inMonth(month);
+
+        aMonthChart->setMonth(targetMonth);
+        ui->commentTextEdit->clear();
+        ui->commentTextEdit->appendPlainText(targetMonth.getCommentStrings());
     });
 
 }
