@@ -132,6 +132,31 @@ void DataManager::setCommentText(QString fileName)
     }
 }
 
+void DataManager::setWeatherData(QString fileName)
+{
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "can not open" << fileName;
+    }
+
+    while(file.atEnd() == false)
+    {
+        QString str = file.readLine();
+        QStringList list = str.split(",");
+        QStringList date = list.at(0).split('/');
+        std::size_t year = date.at(0).toInt();
+        std::size_t month = date.at(1).toInt();
+        std::size_t day = date.at(2).toInt();
+        float averageTemplature = list.at(5).toFloat();
+
+        if(existYear(year) && inYear(year).existMonth(month))
+        {
+            inYear(year).inMonth(month).averageTemperature[day-1] = averageTemplature;
+        }
+    }
+}
+
 YearlySensorType &DataManager::inYear(int y)
 {
     for(std::size_t i = 0; i < data.size(); ++i)
@@ -140,5 +165,14 @@ YearlySensorType &DataManager::inYear(int y)
     }
     qDebug() << y << "did not found in data";
     return data[0];
+}
+
+bool DataManager::existYear(const int y) const
+{
+    for(std::size_t i = 0; i < data.size(); ++i)
+    {
+        if(data[i].year == y) return true;
+    }
+    return false;
 }
 

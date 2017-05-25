@@ -32,17 +32,24 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionSensorFileOpen, QAction::triggered,[=,&dataManager](){
         QString fileName = QFileDialog::getOpenFileName(this,"センサデータフィアルを選択","","Text File (*.txt *.csv)");
         dataManager = new DataManager(fileName);
-        qDebug() << "read complete";
+        qDebug() << "senssor file read complete";
 
         ui->beginComboBox->addItems(dataManager->getDataList());
         ui->monthSelectComboBox->addItems(dataManager->getDataList());
         ui->actionCommentFileOpen->setEnabled(true);
+        ui->actionWeatherFileOpen->setEnabled(true);
     });
 
     connect(ui->actionCommentFileOpen, QAction::triggered,[=,&dataManager](){
         QString fileName = QFileDialog::getOpenFileName(this,"コメントフィアルを選択","","Text File (*.txt *.csv)");
         dataManager->setCommentText(fileName);
-        qDebug() << "read complete";
+        qDebug() << "comment file read complete";
+    });
+
+    connect(ui->actionWeatherFileOpen, QAction::triggered,[=,&dataManager](){
+        QString fileName = QFileDialog::getOpenFileName(this,"気象データフィアルを選択","","Text File (*.txt *.csv)");
+        dataManager->setWeatherData(fileName);
+        qDebug() << "weather file read complete";
     });
 
     connect(ui->beginComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),[=,&dataManager](int index){

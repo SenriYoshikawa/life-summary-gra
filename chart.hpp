@@ -4,6 +4,7 @@
 #include <QtCharts/QChart>
 #include <QtCore/QTimer>
 #include <QtCharts/QLineSeries>
+#include <QtCharts/QBarSeries>
 
 #include "montylysensortype.hpp"
 #include "datamanager.hpp"
@@ -23,6 +24,9 @@ public:
     void setMonth(MontylySensorType data);
     void setTermMonth(const DataManager &dataManager, int const begin, int const length);
 
+private:
+    QBarSeries *barSeries;
+    QLineSeries *lineSeries;
 };
 
 #endif // AMONTHCHART_HPP

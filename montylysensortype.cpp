@@ -12,6 +12,7 @@ MontylySensorType::MontylySensorType(const int _month, const std::vector<DailySe
         s1_sum += each_day.s1_sum;
         s2_sum += each_day.s2_sum;
     }
+    averageTemperature = std::vector<float> (31, 0);
 }
 
 QString MontylySensorType::getCommentStrings() const

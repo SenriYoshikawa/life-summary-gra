@@ -20,3 +20,12 @@ MontylySensorType &YearlySensorType::inMonth(int m)
     qDebug() << m << "did not found in" << year << "data";
     return yearlyData[0];
 }
+
+bool YearlySensorType::existMonth(int m)
+{
+    for(std::size_t i = 0; i < yearlyData.size(); ++i)
+    {
+        if(yearlyData[i].month == m) return true;
+    }
+    return false;
+}
