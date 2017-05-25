@@ -9,6 +9,8 @@
 #include <QtCharts/QLegend>
 #include <QtCharts/QBarCategoryAxis>
 #include <QLayout>
+#include <QValueAxis>
+
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -39,19 +41,48 @@ void Chart::setMonth(MontylySensorType data)
     barSeries->append(s1Set);
     barSeries->append(s2Set);
 
+    QLineSeries *lineSeries = new QLineSeries();
+    lineSeries->setName("trend");
+    lineSeries->append(QPoint(0, 5));
+    lineSeries->append(QPoint(1, 10));
+    lineSeries->append(QPoint(2, 15));
+    lineSeries->append(QPoint(3, 20));
+    lineSeries->append(QPoint(4, 25));
+    lineSeries->append(QPoint(5, 30));
 
-    this->removeAllSeries();
-    this->addSeries(barSeries);
+    QValueAxis *axisTempreture = new QValueAxis;
+    axisTempreture->setRange(-10, 40);
+    axisTempreture->setTickCount(11);
+
+    QValueAxis *axisSensor = new QValueAxis;
+    axisSensor->setRange(0, 2000);
+    axisSensor->setTickCount(11);
 
     QStringList categories;
     for(auto const& each : data.monthlyData)
     {
         categories << QString::number(each.day) + "日";
     }
-    QBarCategoryAxis *axis = new QBarCategoryAxis();
-    axis->append(categories);
-    this->createDefaultAxes();
-    this->setAxisX(axis, barSeries);
+    QBarCategoryAxis *axisDays = new QBarCategoryAxis();
+    axisDays->append(categories);
+
+    lineSeries->attachAxis(axisDays);
+    lineSeries->attachAxis(axisTempreture);
+
+    barSeries->attachAxis(axisDays);
+    barSeries->attachAxis(axisSensor);
+
+
+    this->removeAllSeries();
+    this->addSeries(barSeries);
+    this->addSeries(lineSeries);
+
+
+    //this->createDefaultAxes();
+    this->setAxisX(axisDays, barSeries);
+    this->setAxisY(axisSensor, barSeries);
+    //this->setAxisY(axisTempreture, lineSeries);
+    this->addAxis(axisTempreture, Qt::AlignRight);
 
 
 }
