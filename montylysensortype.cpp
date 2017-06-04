@@ -26,3 +26,10 @@ QString MontylySensorType::getCommentStrings() const
     return str;
 
 }
+
+bool MontylySensorType::existDay(int d)
+{
+    if(monthlyData.size() >= d) return true;
+    return false;
+}
+
