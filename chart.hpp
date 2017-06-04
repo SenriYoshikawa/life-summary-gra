@@ -23,6 +23,7 @@ public:
     Chart();
     void setMonth(MontylySensorType data);
     void setTermMonth(const DataManager &dataManager, int const begin, int const length);
+    void set3HoursInADay(DataManager &dataManager, int year, int month, int day);
 
 private:
     QBarSeries *barSeries;

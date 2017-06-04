@@ -13,7 +13,7 @@ public:
     MontylySensorType(int const _month, std::vector<DailySensorType> const _monthlyData);
     QString getCommentStrings() const;
     std::vector<float> averageTemperature;
-    bool existDay(int d);
+    bool existDay(std::size_t d) const;
 
     double s1_sum = 0;
     double s2_sum = 0;

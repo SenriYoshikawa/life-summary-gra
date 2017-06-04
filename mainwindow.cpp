@@ -95,7 +95,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
         if(dataManager->existYear(year) && dataManager->inYear(year).existMonth(month) && dataManager->inYear(year).inMonth(month).existDay(day))
         {
-            //threeHoursChart->
+            threeHoursChart->set3HoursInADay(*dataManager, year, month, day);
         }
     });
 

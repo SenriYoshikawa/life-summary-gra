@@ -27,7 +27,7 @@ QString MontylySensorType::getCommentStrings() const
 
 }
 
-bool MontylySensorType::existDay(int d)
+bool MontylySensorType::existDay(std::size_t d) const
 {
     if(monthlyData.size() >= d) return true;
     return false;
