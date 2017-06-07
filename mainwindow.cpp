@@ -29,6 +29,12 @@ MainWindow::MainWindow(QWidget *parent) :
     termChartlay->addWidget(termMonthChartView);
     ui->chartWidget->setLayout(termChartlay);
 
+    QLayout *threeHoursChartlay = new QHBoxLayout;
+    Chart* threeHoursChart = new Chart();
+    QChartView *threeHoursChartView = new QChartView(threeHoursChart);
+    threeHoursChartlay->addWidget(threeHoursChartView);
+    ui->threeHoursWidget->setLayout(threeHoursChartlay);
+
     connect(ui->actionSensorFileOpen, QAction::triggered,[=,&dataManager](){
         QString fileName = QFileDialog::getOpenFileName(this,"センサデータフィアルを選択","","Text File (*.txt *.csv)");
         dataManager = new DataManager(fileName);
@@ -38,6 +44,10 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->monthSelectComboBox->addItems(dataManager->getDataList());
         ui->actionCommentFileOpen->setEnabled(true);
         ui->actionWeatherFileOpen->setEnabled(true);
+        QDate date(dataManager->data.at(0).year,
+                   dataManager->data.at(0).yearlyData.at(0).month,
+                   dataManager->data.at(0).yearlyData.at(0).monthlyData.at(0).day);
+        ui->threeHoursDateEdit->setDate(date);
     });
 
     connect(ui->actionCommentFileOpen, QAction::triggered,[=,&dataManager](){
@@ -71,6 +81,24 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->commentTextEdit->clear();
         ui->commentTextEdit->appendPlainText(targetMonth.getCommentStrings());
     });
+
+    connect(ui->threeHoursDateEdit, &QDateEdit::dateChanged, [=,&dataManager](){
+        /*
+        qDebug() << ui->threeHoursDateEdit->date().day();
+        qDebug() << ui->threeHoursDateEdit->date().month();
+        qDebug() << ui->threeHoursDateEdit->date().year();
+        */
+        int year = ui->threeHoursDateEdit->date().year();
+        int month = ui->threeHoursDateEdit->date().month();
+        int day = ui->threeHoursDateEdit->date().day();
+
+
+        if(dataManager->existYear(year) && dataManager->inYear(year).existMonth(month) && dataManager->inYear(year).inMonth(month).existDay(day))
+        {
+            threeHoursChart->set3HoursInADay(*dataManager, year, month, day);
+        }
+    });
+
 
 }
 

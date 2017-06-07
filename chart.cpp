@@ -116,3 +116,74 @@ void Chart::setTermMonth(DataManager const& dataManager, const int begin, const 
     this->setAxisX(axis, barSeries);
 }
 
+void Chart::set3HoursInADay(DataManager &dataManager, int year, int month, int day)
+{
+    QBarSet *s1Set = new QBarSet("Sensor1");
+    QBarSet *s2Set = new QBarSet("Sensor2");
+
+    auto& targetDay = dataManager.inYear(year).inMonth(month).monthlyData.at(day - 1).dailyData;
+
+    std::vector<std::tuple<double, double, double>> threeHoursData;
+    threeHoursData.reserve(31);
+    for(std::size_t i = 0; i < 24 / 3; ++i)
+    {
+        double s1 = 0;
+        double s2 = 0;
+        double temp = 25;
+        for(std::size_t j = 0; j < 60 * 3; ++j)
+        {
+            s1 += targetDay.at(i * 3 * 60 + j).sensor1;
+            s2 += targetDay.at(i * 3 * 60 + j).sensor2;
+        }
+        threeHoursData.emplace_back(std::make_tuple(s1, s2, temp));
+    }
+
+    for(auto const& each : threeHoursData)
+    {
+        *s1Set << std::get<0>(each);
+        *s2Set << std::get<1>(each);
+    }
+
+    QBarSeries *barSeries = new QBarSeries();
+    barSeries->append(s1Set);
+    barSeries->append(s2Set);
+
+    QLineSeries *lineSeries = new QLineSeries();
+    lineSeries->setName("Average templature");
+    for(std::size_t i = 0; i < threeHoursData.size(); ++i)
+    {
+        lineSeries->append(QPointF(i, std::get<2>(threeHoursData.at(i))));
+        //qDebug() << data.averageTemperature[i];
+    }
+
+    QValueAxis *axisTemperature = new QValueAxis;
+    axisTemperature->setRange(-10.0, 40.0);
+    axisTemperature->setTickCount(11);
+
+    QValueAxis *axisSensor = new QValueAxis;
+    axisSensor->setRange(0, 400);
+    axisSensor->setTickCount(11);
+    //this->addAxis(axisTemperature, Qt::AlignRight);
+
+    QStringList categories;
+    for(std::size_t i = 0; i < 24 / 3; ++i)
+    {
+        categories << QString::number(i * 3) + "~" + QString::number(i * 3 + 3);
+    }
+    QBarCategoryAxis *axisDays = new QBarCategoryAxis();
+    axisDays->append(categories);
+
+    this->removeAllSeries();
+    this->removeAxis(this->axisX());
+    this->removeAxis(this->axisY());
+    this->removeAxis(this->axisY());
+
+    this->addSeries(barSeries);
+    this->addSeries(lineSeries);
+
+    this->setAxisY(axisTemperature, lineSeries);
+    this->setAxisX(axisDays, barSeries);
+    this->setAxisY(axisSensor, barSeries);
+
+}
+
