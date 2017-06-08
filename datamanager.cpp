@@ -157,6 +157,38 @@ void DataManager::setWeatherData(QString fileName)
     }
 }
 
+void DataManager::setHoursWeatherData(QString fileName)
+{
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "can not open" << fileName;
+    }
+    while(file.atEnd() == false)
+    {
+        QString str = file.readLine();
+        QStringList list = str.split(",");
+        QStringList date = list.at(0).split('/');
+        std::size_t year = date.at(0).toInt();
+        std::size_t month = date.at(1).toInt();
+        std::size_t day = date.at(2).toInt();
+        std::size_t hour = list.at(1).split(':').at(0).toInt();
+        float averageTemplature = list.at(3).toFloat();
+
+        if(existYear(year) && inYear(year).existMonth(month) && inYear(year).inMonth(month).existDay(day))
+        {
+            qDebug() << averageTemplature;
+            inYear(year).inMonth(month).monthlyData.at(day-1).everyHourTemperature.at(hour) = averageTemplature;
+        }
+    }
+
+    for(auto& each : data)
+    {
+        each.generateTempratureAverage();
+    }
+
+}
+
 YearlySensorType &DataManager::inYear(int y)
 {
     for(std::size_t i = 0; i < data.size(); ++i)

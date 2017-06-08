@@ -18,6 +18,7 @@ public:
     void generateDataList();
     void setCommentText(QString fileName);
     void setWeatherData(QString fileName);
+    void setHoursWeatherData(QString fileName);
     YearlySensorType& inYear(int y);
     bool existYear(int const y) const;
 };

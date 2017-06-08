@@ -17,6 +17,7 @@ public:
     double s2_ave = 0;
     int const day;
     std::vector<SensorDataType> const dailyData;
+    std::vector<float> everyHourTemperature;
 };
 
 #endif // DAILYSENSORTYPE_HPP

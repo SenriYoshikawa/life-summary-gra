@@ -121,7 +121,7 @@ void Chart::set3HoursInADay(DataManager &dataManager, int year, int month, int d
     QBarSet *s1Set = new QBarSet("Sensor1");
     QBarSet *s2Set = new QBarSet("Sensor2");
 
-    auto& targetDay = dataManager.inYear(year).inMonth(month).monthlyData.at(day - 1).dailyData;
+    auto& targetDay = dataManager.inYear(year).inMonth(month).monthlyData.at(day - 1);
 
     std::vector<std::tuple<double, double, double>> threeHoursData;
     threeHoursData.reserve(31);
@@ -129,13 +129,17 @@ void Chart::set3HoursInADay(DataManager &dataManager, int year, int month, int d
     {
         double s1 = 0;
         double s2 = 0;
-        double temp = 25;
+        float temp = 0;
+        for(std::size_t j = 0; j < 3; ++j)
+        {
+            temp += targetDay.everyHourTemperature.at(i * 3 + j);
+        }
         for(std::size_t j = 0; j < 60 * 3; ++j)
         {
-            s1 += targetDay.at(i * 3 * 60 + j).sensor1;
-            s2 += targetDay.at(i * 3 * 60 + j).sensor2;
+            s1 += targetDay.dailyData.at(i * 3 * 60 + j).sensor1;
+            s2 += targetDay.dailyData.at(i * 3 * 60 + j).sensor2;
         }
-        threeHoursData.emplace_back(std::make_tuple(s1, s2, temp));
+        threeHoursData.emplace_back(std::make_tuple(s1, s2, temp / 3));
     }
 
     for(auto const& each : threeHoursData)
@@ -153,7 +157,7 @@ void Chart::set3HoursInADay(DataManager &dataManager, int year, int month, int d
     for(std::size_t i = 0; i < threeHoursData.size(); ++i)
     {
         lineSeries->append(QPointF(i, std::get<2>(threeHoursData.at(i))));
-        //qDebug() << data.averageTemperature[i];
+        qDebug() << std::get<2>(threeHoursData.at(i));
     }
 
     QValueAxis *axisTemperature = new QValueAxis;

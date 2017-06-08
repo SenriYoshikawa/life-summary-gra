@@ -13,4 +13,5 @@ DailySensorType::DailySensorType(const int _day, const std::vector<SensorDataTyp
         s1_sum += each.sensor1;
         s2_sum += each.sensor2;
     }
+    everyHourTemperature = std::vector<float>(24,0);
 }

@@ -14,11 +14,12 @@ public:
     QString getCommentStrings() const;
     std::vector<float> averageTemperature;
     bool existDay(std::size_t d) const;
+    void generateTempreatureAverage();
 
     double s1_sum = 0;
     double s2_sum = 0;
     int const month;
-    std::vector<DailySensorType> const monthlyData;
+    std::vector<DailySensorType> monthlyData;
     std::vector<QString> comment;
 };
 

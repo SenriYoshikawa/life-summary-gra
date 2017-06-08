@@ -33,3 +33,16 @@ bool MontylySensorType::existDay(std::size_t d) const
     return false;
 }
 
+void MontylySensorType::generateTempreatureAverage()
+{
+    for(std::size_t i = 0; i < monthlyData.size(); ++i)
+    {
+        double sum = 0;
+        for(auto const& each : monthlyData.at(i).everyHourTemperature)
+        {
+            sum += each;
+        }
+        averageTemperature[i] = sum / 24;
+    }
+}
+

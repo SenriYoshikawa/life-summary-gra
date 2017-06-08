@@ -29,3 +29,8 @@ bool YearlySensorType::existMonth(int m)
     }
     return false;
 }
+
+void YearlySensorType::generateTempratureAverage()
+{
+    for(auto& each : yearlyData)each.generateTempreatureAverage();
+}

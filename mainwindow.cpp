@@ -58,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionWeatherFileOpen, QAction::triggered,[=,&dataManager](){
         QString fileName = QFileDialog::getOpenFileName(this,"気象データフィアルを選択","","Text File (*.txt *.csv)");
-        dataManager->setWeatherData(fileName);
+        dataManager->setHoursWeatherData(fileName);
         qDebug() << "weather file read complete";
     });
 
