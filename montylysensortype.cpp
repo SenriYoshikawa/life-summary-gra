@@ -21,7 +21,7 @@ QString MontylySensorType::getCommentStrings() const
     for(auto const& each : comment)
     {
         str += each;
-        str += "\n";
+        //str += "\n";
     }
     return str;
 
